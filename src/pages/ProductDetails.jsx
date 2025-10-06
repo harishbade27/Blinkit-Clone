@@ -6,7 +6,7 @@ import { addToCart } from "../features/cartSlice";
 
 export default function ProductDetails() {
   const { id } = useParams();
-  const [product, setProduct] = useState(null); 
+  const [product, setProduct] = useState(null);
   const [tooltip, setTooltip] = useState("");
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
