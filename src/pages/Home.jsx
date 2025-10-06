@@ -8,7 +8,7 @@ import { addToCart } from "../features/cartSlice";
 const Home = ({ searchTerm }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [tooltip, setTooltip] = useState(false); // For showing message
+  const [tooltip, setTooltip] = useState("");
   const theme = useSelector((state) => state.theme.mode);
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
@@ -29,11 +29,13 @@ const Home = ({ searchTerm }) => {
   const handleAddToCart = (product) => {
     const alreadyInCart = cartItems.some((item) => item.id === product.id);
     if (alreadyInCart) {
-      setTooltip(true);
-      setTimeout(() => setTooltip(false), 1500);
+      setTooltip("Already in Cart");
     } else {
       dispatch(addToCart(product));
+      setTooltip("Added to Cart");
     }
+    // Hide tooltip after 1.5s
+    setTimeout(() => setTooltip(""), 1500);
   };
 
   const filtered = products.filter((p) =>
@@ -43,8 +45,9 @@ const Home = ({ searchTerm }) => {
   if (loading) {
     return (
       <div
-        className={`flex justify-center items-center h-64 ${theme === "dark" ? "bg-gray-900" : "bg-white"
-          }`}
+        className={`flex justify-center items-center h-64 ${
+          theme === "dark" ? "bg-gray-900" : "bg-white"
+        }`}
       >
         <div className="w-12 h-12 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
       </div>
@@ -55,9 +58,10 @@ const Home = ({ searchTerm }) => {
     <div className={`relative ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white"}`}>
       <Banner />
 
+      {/* Tooltip */}
       {tooltip && (
-        <div className="absolute top-4 right-4 bg-green-600 text-white text-sm px-4 py-2 rounded shadow-lg animate-slideIn">
-          Already in Cart
+        <div className="fixed top-4 right-4 bg-gray-800 text-white text-sm px-4 py-2 rounded shadow-lg transition-all duration-300 transform scale-105 z-50">
+          {tooltip}
         </div>
       )}
 
