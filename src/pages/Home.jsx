@@ -34,7 +34,6 @@ const Home = ({ searchTerm }) => {
       dispatch(addToCart(product));
       setTooltip("Added to Cart");
     }
-    // Hide tooltip after 1.5s
     setTimeout(() => setTooltip(""), 1500);
   };
 
@@ -58,7 +57,6 @@ const Home = ({ searchTerm }) => {
     <div className={`relative ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white"}`}>
       <Banner />
 
-      {/* Tooltip */}
       {tooltip && (
         <div className="fixed top-4 right-4 bg-gray-800 text-white text-sm px-4 py-2 rounded shadow-lg transition-all duration-300 transform scale-105 z-50">
           {tooltip}
